@@ -22,7 +22,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for characters in items %}
+            {% for character in items %}
             <tr>
                 <td><a href="{{ url_for('character.edit', character_id=character.id) }}">編集</a></td>
                 <td>{{ character.name }}</td>

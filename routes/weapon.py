@@ -18,8 +18,8 @@ def add():
     if request.method == 'POST':
         name = request.form['name']
         attribute = request.form['attribute']
-        atackpower = request.form['atackpower']
-        Weapon.create(name=name, attribute=attribute,atackpower=atackpower)
+        attackpower = request.form['attackpower']
+        Weapon.create(name=name, attribute=attribute,attackpower=attackpower)
         return redirect(url_for('weapon.list'))
     
     return render_template('weapon_add.html')
@@ -27,7 +27,7 @@ def add():
 
 @weapon_bp.route('/edit/<int:weapon_id>', methods=['GET', 'POST'])
 def edit(weapon_id):
-    weapon = weapon.get_or_none(weapon.id == weapon_id)
+    weapon = Weapon.get_or_none(Weapon.id == weapon_id)
     if not weapon:
         return redirect(url_for('weapon.list'))
 

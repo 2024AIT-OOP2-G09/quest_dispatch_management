@@ -13,13 +13,13 @@
         <li>キャラクター編集</li>
     </ul>
 
-    <form action="{{ url_for('character.edit', user_id=character.id) }}" method="post">
+    <form action="{{ url_for('character.edit', character_id=character.id) }}" method="post">
         <label>名前: <input type="text" name="name" value="{{ character.name }}" required></label><br>
         <label>性別:
             <select name="gender" required>
-                <option value="male" {% if user.gender = 'male' %}selected{% endif %}>男性</option>
-                <option value="female" {% if user.gender = 'female' %}selected{% endif %}>女性</option>
-                <option value="other" {% if user.gender = 'other' %}selected{% endif %}>その他</option>
+                <option value="male" {% if character.gender == 'male' %}selected{% endif %}>男性</option>
+                <option value="female" {% if character.gender == 'female' %}selected{% endif %}>女性</option>
+                <option value="other" {% if character.gender == 'other' %}selected{% endif %}>その他</option>
             </select>
         </label><br>
         <button type="submit">保存</button>
