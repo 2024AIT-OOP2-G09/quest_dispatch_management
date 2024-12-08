@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>データ一覧</title>
+    <title>クエスト一覧</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
 </head>
 <body>
@@ -12,22 +12,25 @@
         <li><a href="{{ url_for('quest.list') }}">クエスト一覧</a></li>
     </ul>
 
-    <a href="{{ url_for('quest.add') }}">新規ダンジョン追加</a>
+    <a href="{{ url_for('quest.add') }}">新規クエスト追加</a>
     <table>
         <thead>
             <tr>
                 <th>&nbsp;</th>
-                <th>冒険者</th>
-                <th>行き先</th>
+                <th>クエスト名</th>
+                <th>キャラクター</th>
+                <th>武器</th>
+                <th>クエスト受注日</th>
             </tr>
         </thead>
         <tbody>
-            {% for user in items %}
+            {% for quest in items %}
             <tr>
-                <td><a href="{{ url_for('quest.edit', order_id=order.id) }}">編集</a></td>
-                <td>{{ user.name }}</td>
-                <td>{{ order.product.name }}</td>
-                <td>{{ order.order_date }}</td>
+                <td><a href="{{ url_for('quest.edit', quest_id=quest.id) }}">編集</a></td>
+                <td>{{ quest.name }}</td>
+                <td>{{ quest.character.name }}</td>
+                <td>{{ quest.weapon.name }}</td>
+                <td>{{ quest.quest_date }}</td>
             </tr>
             {% endfor %}
         </tbody>

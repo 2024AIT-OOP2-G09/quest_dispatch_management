@@ -33,7 +33,8 @@ def edit(weapon_id):
 
     if request.method == 'POST':
         weapon.name = request.form['name']
-        weapon.price = request.form['price']
+        weapon.attribute = request.form['attribute']
+        weapon.attackpower = request.form['attackpower']
         weapon.save()
         return redirect(url_for('weapon.list'))
 
