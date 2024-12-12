@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>キャラクター編集</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
+</head>
+<body>
+    <h1>キャラクターを編集</h1>
+    <ul class="breadcrumb">
+        <li><a href="{{ url_for('index') }}">HOME</a></li>
+        <li><a href="{{ url_for('character.list') }}">キャラクター一覧</a></li>
+        <li>キャラクター編集</li>
+    </ul>
+
+    <form action="{{ url_for('character.edit', character_id=character.id) }}" method="post">
+        <label>名前: <input type="text" name="name" value="{{ character.name }}" required></label><br>
+        <label>性別:
+            <select name="gender" required>
+                <option value="男性" {% if character.gender == 'male' %}selected{% endif %}>男性</option>
+                <option value="女性" {% if character.gender == 'female' %}selected{% endif %}>女性</option>
+                <option value="その他" {% if character.gender == 'other' %}selected{% endif %}>その他</option>
+            </select>
+        </label><br>
+        <button type="submit">保存</button>
+    </form>
+</body>
+</html>

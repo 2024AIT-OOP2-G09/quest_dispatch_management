@@ -9,24 +9,26 @@
     <h1>{{ title }}</h1>
     <ul class="breadcrumb">
         <li><a href="{{ url_for('index') }}">HOME</a></li>
-        <li><a href="{{ url_for('product.list') }}">製品一覧</a></li>
+        <li><a href="{{ url_for('weapon.list') }}">武器一覧</a></li>
 
     </ul>
-    <a href="{{ url_for('product.add') }}">新規製品追加</a>
+    <a href="{{ url_for('weapon.add') }}">新規武器追加</a>
     <table>
         <thead>
             <tr>
                 <th>&nbsp;</th>
-                <th>製品名</th>
-                <th>価格</th>
+                <th>武器名</th>
+                <th>武器の攻撃力</th>
+                <th>武器タイプ</th>
             </tr>
         </thead>
         <tbody>
-            {% for product in items %}
+            {% for weapon in items %}
             <tr>
-                <td><a href="{{ url_for('product.edit', product_id=product.id) }}">編集</a></td>
-                <td>{{ product.name }}</td>
-                <td>{{ product.price }}</td>
+                <td><a href="{{ url_for('weapon.edit', weapon_id=weapon.id) }}">編集</a></td>
+                <td>{{ weapon.name }}</td>
+                <td>{{ weapon.attackpower }}</td>
+                <td>{{ weapon.attribute }}</td>
             </tr>
             {% endfor %}
         </tbody>

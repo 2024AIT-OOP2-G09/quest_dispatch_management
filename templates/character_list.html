@@ -9,10 +9,17 @@
     <h1>{{ title }}</h1>
     <ul class="breadcrumb">
         <li><a href="{{ url_for('index') }}">HOME</a></li>
+<<<<<<< HEAD:templates/user_list.html
         <li><a href="{{ url_for('user.list') }}">キャラクター一覧</a></li>
     </ul>
 
     <a href="{{ url_for('user.add') }}">新規キャラクター追加</a>
+=======
+        <li><a href="{{ url_for('character.list') }}">キャラクター一覧</a></li>
+    </ul>
+
+    <a href="{{ url_for('character.add') }}">新規キャラクター追加</a>
+>>>>>>> main:templates/character_list.html
     <table>
         <thead>
             <tr>
@@ -22,11 +29,11 @@
             </tr>
         </thead>
         <tbody>
-            {% for user in items %}
+            {% for character in items %}
             <tr>
-                <td><a href="{{ url_for('user.edit', user_id=user.id) }}">編集</a></td>
-                <td>{{ user.name }}</td>
-                <td>{{ user.age }}</td>
+                <td><a href="{{ url_for('character.edit', character_id=character.id) }}">編集</a></td>
+                <td>{{ character.name }}</td>
+                <td>{{ character.gender }}</td>
             </tr>
             {% endfor %}
         </tbody>

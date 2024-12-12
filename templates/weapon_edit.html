@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>武器編集</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
+</head>
+<body>
+    <h1>武器を編集</h1>
+    <ul class="breadcrumb">
+        <li><a href="{{ url_for('index') }}">HOME</a></li>
+        <li><a href="{{ url_for('weapon.list') }}">武器一覧</a></li>
+        <li>武器編集</li>
+    </ul>
+
+    <form action="{{ url_for('weapon.edit', weapon_id=weapon.id) }}" method="post">
+        <label>武器名: <input type="text" name="name" value="{{ weapon.name }}" required></label><br>
+        <label>攻撃力: <input type="number" step="1" name="attackpower" value="{{ weapon.attackpower }}" required></label><br>
+        <label>武器タイプ: <select name="attribute" required>
+            <option value="剣">剣</option>
+            <option value="杖"{% if weapon.attribute=="杖" %}selected{% endif %}>杖</option>
+        </select></label><br>
+        <button type="submit">保存</button>
+    </form>
+</body>
+</html>
