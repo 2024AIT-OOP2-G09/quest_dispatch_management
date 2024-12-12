@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>データ一覧</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/charts.css/dist/charts.min.css">
+
 </head>
 <body>
     <h1>index</h1>
@@ -12,5 +14,31 @@
       <li><a href="{{ url_for('weapon.list') }}">武器リスト</a></li>
       <li><a href="{{ url_for('quest.list') }}">クエストリスト</a></li>
     </ul>
+
+    <h2>クエスト受注数ランキング</h2>
+    <table class="charts-css bar">
+
+        <thead>
+            <tr>
+                <th>順位</th>
+                <th>キャラクター名</th>
+                <th>クエスト受注数</th>
+            </tr>
+        </thead>
+
+        <tbody>
+          {% set max_quest_count = ranking|map(attribute='quest_count')|max + 1%}
+          {% for character in ranking[:5] %}
+          {% set quest_count = character.quest_count + 1 %}
+          {% set persent = quest_count/max_quest_count %}
+           <tr style="--size: {{persent}};">
+              <!-- <td>{{ loop.index }}位</td> -->
+              <td>{{ character.name }}</td>
+              <td>{{ character.quest_count }}個</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+
+    </table>
 </body>
 </html>
