@@ -25,7 +25,7 @@
         </thead>
 
         <tbody>
-            {% for character in ranking %}
+            {% for character in ranking[:3] %}
              <tr>
                 <td>{{ loop.index }}位</td>
                 <td>{{ character.name }}</td>
