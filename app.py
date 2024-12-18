@@ -12,6 +12,7 @@ initialize_database()
 for blueprint in blueprints:
     app.register_blueprint(blueprint)
 
+
 # ホームページのルート
 @app.route('/')
 def index():
@@ -23,7 +24,8 @@ def index():
         .group_by(Character)
         .order_by(fn.COUNT(Quest.id).desc())
     )
-    ranking = list(ranking_query)  # クエリ結果をリストに変換
+    # ranking_query は既にイテラブルなので、そのまま使用
+    ranking = ranking_query  # クエリ結果はそのまま使用
 
     # 武器属性ごとのカウント取得
     weapon_attribute_query = (
@@ -50,6 +52,22 @@ def index():
     if not ranking:
         ranking = [{'name': 'デフォルトキャラクター', 'quest_count': 0}]
 
+    # 女性キャラクター数のカウント（仮定）
+    female_count = Character.select().where(Character.gender == '女性').count()
+
+    # 総キャラクター数
+    total_count = len(ranking)
+
+    # 男性キャラクター数のカウント（仮定）
+    male_count = total_count - female_count
+
+    # その他のキャラクター数の計算
+    other_count = total_count - (male_count + female_count)
+
+    # 男性と女性の割合を計算
+    male_percentage = male_count / total_count if total_count > 0 else 0
+    female_percentage = female_count / total_count if total_count > 0 else 0
+
     return render_template(
         'index.html',
         ranking=ranking,
@@ -57,9 +75,13 @@ def index():
         sword_count=sword_count,
         tue_count=tue_count,
         sword_ratio=sword_ratio,
-        tue_ratio=tue_ratio
+        tue_ratio=tue_ratio,
+        male_count=male_count, 
+        female_count=female_count,
+        male_percentage=male_percentage,
+        female_percentage=female_percentage,
+        other_count=other_count  
     )
 
 if __name__ == '__main__':
     app.run(port=8080, debug=True)
-    
