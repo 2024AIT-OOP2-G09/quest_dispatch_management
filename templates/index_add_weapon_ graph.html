@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>データ一覧</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='charts.min.css') }}">
+</head>
+
+<body>
+    <h1>index</h1>
+    <ul>
+        <li><a href="{{ url_for('character.list') }}">キャラクターリスト</a></li>
+        <li><a href="{{ url_for('weapon.list') }}">武器リスト</a></li>
+        <li><a href="{{ url_for('quest.list') }}">クエストリスト</a></li>
+    </ul>
+
+    <h2>武器の割合</h2>
+    <div id="my-chart ">
+        <table class="charts-css pie show-primary-axis">
+            <caption> 武器タイプの割合 </caption>
+
+            <tr>
+                <td style="--start: 0.0; --end: 0.4;"> <span class="data"> 剣 </span></td>
+            </tr>
+            <tr>
+                <td style="--start: 0.4; --end: 1.0;"> <span class="data"> 杖 </span></td>
+            </tr>
+        </table>
+    </div>
+</body>
+
+</html>

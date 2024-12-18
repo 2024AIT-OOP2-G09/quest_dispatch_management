@@ -14,7 +14,7 @@ for blueprint in blueprints:
 # ホームページのルート
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index_add_weapon_graph.html')#TODO: 元に戻す
 
 if __name__ == '__main__':
     app.run(port=8080, debug=True)
