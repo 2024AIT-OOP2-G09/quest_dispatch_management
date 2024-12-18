@@ -49,11 +49,17 @@
             <caption> 武器タイプの割合 </caption>
 
             <tr>
-                <td style="--start: 0.0; --end: {{sword_count/(sword_count+tue_count)}};"> <span class="data"> 剣:{{ sword_count }} </span></td>
+                {% set total_count = sword_count + tue_count %}
+                <td style="--start: 0.0; --end: {{ 0 if total_count == 0 else sword_count/total_count }};"> 
+                    <span class="data"> 剣:{{ sword_count }} </span>
+                </td>
             </tr>
             <tr>
-                <td style="--start: {{sword_count/(sword_count+tue_count)}}; --end: 1.0;"> <span class="data"> 杖:{{ tue_count }} </span></td>
+                <td style="--start: {{ 0 if total_count == 0 else sword_count/total_count }}; --end: 1.0;"> 
+                    <span class="data"> 杖:{{ tue_count }} </span>
+                </td>
             </tr>
+            
         </table>
     </div>
 </body>
