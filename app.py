@@ -2,7 +2,6 @@ from flask import Flask, render_template
 from models import initialize_database, Character, Weapon, Quest
 from routes import blueprints
 from peewee import fn, JOIN
-from models import Weapon
 
 app = Flask(__name__)
 
