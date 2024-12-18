@@ -40,5 +40,19 @@
         </tbody>
 
     </table>
+    
+    <h3>武器の割合</h3>
+    <div id="my-chart ">
+        <table class="charts-css pie show-primary-axis">
+            <caption> 武器タイプの割合 </caption>
+
+            <tr>
+                <td style="--start: 0.0; --end: {{sword_count/(sword_count+tue_count)}};"> <span class="data"> 剣:{{ sword_count }} </span></td>
+            </tr>
+            <tr>
+                <td style="--start: {{sword_count/(sword_count+tue_count)}}; --end: 1.0;"> <span class="data"> 杖:{{ tue_count }} </span></td>
+            </tr>
+        </table>
+    </div>
 </body>
 </html>
