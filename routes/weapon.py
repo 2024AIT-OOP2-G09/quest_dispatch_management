@@ -8,7 +8,7 @@ weapon_bp = Blueprint('weapon', __name__, url_prefix='/weapons')
 @weapon_bp.route('/')
 def list():
     weapons = Weapon.select()
-    return render_template('weapon_list.html', title='武器一覧', items=weapons)
+    return render_template('weapon_list.html', title='武器一覧', title2='武器タイプの割合', items=weapons)
 
 
 @weapon_bp.route('/add', methods=['GET', 'POST'])
