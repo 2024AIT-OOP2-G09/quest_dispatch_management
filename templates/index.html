@@ -10,9 +10,9 @@
 <body>
     <h1>index</h1>
     <ul>
-      <li><a href="{{ url_for('character.list') }}">キャラクターリスト</a></li>
-      <li><a href="{{ url_for('weapon.list') }}">武器リスト</a></li>
-      <li><a href="{{ url_for('quest.list') }}">クエストリスト</a></li>
+    <li><a href="{{ url_for('character.list') }}">キャラクターリスト</a></li>
+    <li><a href="{{ url_for('weapon.list') }}">武器リスト</a></li>
+    <li><a href="{{ url_for('quest.list') }}">クエストリスト</a></li>
     </ul>
 
     <h2>クエスト受注数ランキング</h2>
@@ -26,20 +26,17 @@
                     <th>クエスト受注数</th>
                 </tr>
             </thead>
-
             <tbody>
             {% set max_quest_count = ranking|map(attribute='quest_count')|max + 1%}
             {% for character in ranking[:5] %}
-            {% set quest_count = character.quest_count + 1 %}
+            {% set quest_count = character.quest_count %}
             {% set persent = quest_count/max_quest_count %}
             <tr style="--size: {{persent}};">
-                <!-- <td>{{ loop.index }}位</td> -->
                 <td>{{ character.name }}</td>
-                <td>{{ character.quest_count }}個</td>
+                <td>{{ quest_count }}個</td>
             </tr>
             {% endfor %}
             </tbody>
-
         </table>
     </div>
     
@@ -47,12 +44,38 @@
     <div class="chart">
         <table class="charts-css pie show-primary-axis">
             <caption> 武器タイプの割合 </caption>
-
             <tr>
-                <td style="--start: 0.0; --end: {{sword_count/(sword_count+tue_count)}};"> <span class="data"> 剣:{{ sword_count }} </span></td>
+                {% set total_count = sword_count + tue_count %}
+                <td style="--start: 0.0; --end: {{ 0 if total_count == 0 else sword_count/total_count }};"> 
+                    <span class="data"> 剣:{{ sword_count }} </span>
+                </td>
             </tr>
             <tr>
-                <td style="--start: {{sword_count/(sword_count+tue_count)}}; --end: 1.0;"> <span class="data"> 杖:{{ tue_count }} </span></td>
+                <td style="--start: {{ 0 if total_count == 0 else sword_count/total_count }}; --end: 1.0;"> 
+                    <span class="data"> 杖:{{ tue_count }} </span>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <h2>性別の割合</h2>
+    <div class="chart">
+        <table class="charts-css pie show-primary-axis">
+            <caption> 性別の割合 </caption>
+            <tr>
+                <td style="--start: 0.0; --end: {{ male_percentage }}"> 
+                    <span class="data"> 男子: {{ male_count }} </span>
+                </td>
+            </tr>
+            <tr>
+                <td style="--start: {{ male_percentage }}; --end: {{ male_percentage + female_percentage }}"> 
+                    <span class="data"> 女子: {{ female_count }} </span>
+                </td>
+            </tr>
+            <tr>
+                <td style="--start: {{ male_percentage + female_percentage }}; --end: 1.0;"> 
+                    <span class="data"> その他: {{ other_count }} </span>
+                </td>
             </tr>
         </table>
     </div>

@@ -4,14 +4,23 @@ from models import Character
 # Blueprintの作成
 character_bp = Blueprint('character', __name__, url_prefix='/characters')
 
-
 @character_bp.route('/')
 def list():
-    
     # データ取得
     characters = Character.select()
 
-    return render_template('character_list.html', title='キャラクター一覧', items=characters)
+    # 性別ごとの人数をカウント
+    male_count = characters.where(Character.gender == '男子').count()
+    female_count = characters.where(Character.gender == '女子').count()
+    other_count = characters.where(Character.gender != '男子', Character.gender != '女子').count()
+
+    # 総数を計算
+    total_count = male_count + female_count + other_count
+
+    return render_template('index.html', title='キャラクター一覧', items=characters,
+                            male_count=male_count, female_count=female_count, other_count=other_count,
+                            total_count=total_count)
+
 
 
 @character_bp.route('/add', methods=['GET', 'POST'])
