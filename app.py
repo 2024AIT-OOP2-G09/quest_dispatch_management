@@ -27,41 +27,42 @@ def index():
     # ranking_query は既にイテラブルなので、そのまま使用
     ranking = ranking_query  # クエリ結果はそのまま使用
 
-    # 武器属性ごとのカウント取得
-    weapon_attribute_query = (
-        Weapon
-        .select(Weapon.attribute, fn.COUNT(Weapon.id).alias('attribute_count'))
-        .group_by(Weapon.attribute)
-    )
-
-    weapon_counts = {
-        result.attribute: result.attribute_count
-        for result in weapon_attribute_query
-    }
+    # 武器属性ごとのカウント取得（未使用なのでコメントアウトしています）
+    #weapon_attribute_query = (
+    #    Weapon
+    #    .select(Weapon.attribute, fn.COUNT(Weapon.id).alias('attribute_count'))
+    #    .group_by(Weapon.attribute)
+    #)
+    #weapon_counts = {
+    #    result.attribute: result.attribute_count
+    #    for result in weapon_attribute_query
+    #}
 
     # 特定の武器のカウント
-    sword_count = weapon_counts.get("剣", 0)
-    tue_count = weapon_counts.get("杖", 0)
+    #sword_count = weapon_counts.get("剣", 0)
+    sword_count = Weapon.select().where(Weapon.attribute == '剣').count()
+    #tue_count = weapon_counts.get("杖", 0)
+    tue_count = Weapon.select().where(Weapon.attribute == '杖').count()
 
-    # 剣と杖の比率計算（ゼロ除算回避）
-    total_weapons = sword_count + tue_count
-    sword_ratio = sword_count / total_weapons if total_weapons > 0 else 0
-    tue_ratio = tue_count / total_weapons if total_weapons > 0 else 0
+    # 剣と杖の比率計算（ゼロ除算回避）（未使用なのでコメントアウトしています）
+    #total_weapons = sword_count + tue_count
+    #sword_ratio = sword_count / total_weapons if total_weapons > 0 else 0
+    #tue_ratio = tue_count / total_weapons if total_weapons > 0 else 0
 
     # `ranking` が空の場合はデフォルト値を設定
     if not ranking:
         ranking = [{'name': 'デフォルトキャラクター', 'quest_count': 0}]
 
-    # 女性キャラクター数のカウント（仮定）
+    # 女性キャラクター数のカウント
     female_count = Character.select().where(Character.gender == '女性').count()
 
     # 総キャラクター数
-    total_count = len(ranking)
+    total_count = len(Character)
 
-    # 男性キャラクター数のカウント（仮定）
+    # 男性キャラクター数のカウント
     male_count = Character.select().where(Character.gender == '男性').count()
 
-    # その他のキャラクター数の計算
+    # その他のキャラクター数のカウント
     other_count = Character.select().where(Character.gender == 'その他').count()
 
     # 男性と女性の割合を計算
@@ -71,16 +72,13 @@ def index():
     return render_template(
         'index.html',
         ranking=ranking,
-        weapon_counts=weapon_counts,
         sword_count=sword_count,
         tue_count=tue_count,
-        sword_ratio=sword_ratio,
-        tue_ratio=tue_ratio,
         male_count=male_count, 
         female_count=female_count,
+        other_count=other_count,
         male_percentage=male_percentage,
         female_percentage=female_percentage,
-        other_count=other_count  
     )
 
 if __name__ == '__main__':
