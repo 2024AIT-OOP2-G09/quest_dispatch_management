@@ -59,10 +59,10 @@ def index():
     total_count = len(ranking)
 
     # 男性キャラクター数のカウント（仮定）
-    male_count = total_count - female_count
+    male_count = Character.select().where(Character.gender == '男性').count()
 
     # その他のキャラクター数の計算
-    other_count = total_count - (male_count + female_count)
+    other_count = Character.select().where(Character.gender == 'その他').count()
 
     # 男性と女性の割合を計算
     male_percentage = male_count / total_count if total_count > 0 else 0
